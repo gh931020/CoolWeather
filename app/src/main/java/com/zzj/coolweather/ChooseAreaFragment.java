@@ -1,7 +1,6 @@
 package com.zzj.coolweather;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -141,7 +140,7 @@ public class ChooseAreaFragment extends Fragment {
     private void queryCities() {
         title.setText(selectProvince.getProvinceName());
         back.setVisibility(View.VISIBLE);
-        cities = DataSupport.where("provinceid = ?",String.valueOf(selectProvince.getProvinceCode())).find(City.class);
+        cities = DataSupport.where("provincecode = ?",String.valueOf(selectProvince.getProvinceCode())).find(City.class);
         if (cities.size()>0){
             dataList.clear();
             for (City city:cities) {
@@ -178,7 +177,7 @@ public class ChooseAreaFragment extends Fragment {
     /**
      * 根据传入的url和类型从服务器中获取数据
      * @param address
-     * @param province
+     * @param type
      */
     private void queryFromServer(String address, final String type) {
         showProgressDialog();
