@@ -3,9 +3,11 @@ package com.zzj.coolweather.util;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.zzj.coolweather.db.City;
 import com.zzj.coolweather.db.County;
 import com.zzj.coolweather.db.Province;
+import com.zzj.coolweather.gson.Weather;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,6 +92,22 @@ public class Utility {
             }
         }
         return false;
+    }
+
+    public static Weather handleWeatherResponse(String response){
+        try {
+            //获取返回的天气数据
+            JSONObject jsonObject = new JSONObject(response);
+            //返回数据为数组格式
+            JSONArray array = jsonObject.getJSONArray("HeWeather");
+            //从数组中取出所需数据
+            String weatherContent = array.getJSONObject(0).toString();
+            //利用Gson将数据转换成对象
+            return new Gson().fromJson(weatherContent,Weather.class);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
